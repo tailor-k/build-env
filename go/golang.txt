@@ -1,0 +1,55 @@
+# goenv, go環境構築
+# bash環境
+
+
+###############
+# build goenv #
+###############
+
+# goenvが設定済みか確認
+# 設定済みの場合は作業不要
+goenv -v
+
+# goenvのソースをclone 
+git clone https://github.com/syndbg/goenv.git ~/.goenv
+
+# 環境変数が設定済みか確認
+cat ~/.bash_profile | grep -e "GOENV" -e "goenv"
+
+# 環境変数が設定されていない場合は設定
+echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bash_profile
+echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(goenv init -)"' >> ~/.bash_profile
+source ~/.bash_profile
+
+# goenvが設定されたことを確認
+goenv -v
+
+
+############
+# build go #
+############
+
+# installするgoのversionを確認
+goenv install -l
+
+# installしたいversionを指定してインストール
+VERSION="対象のバージョン"
+goenv install ${VERSION}
+
+# 環境変数が設定済みか確認
+cat ~/.bash_profile | grep -e "GOROOT" -e "GOPATH"
+
+# 環境変数の設定
+echo 'export PATH="$GOROOT/bin/$PATH"' >> ~/.bash_profile
+echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bash_profile
+
+# 対象versionの適用
+goenv global ${VERSION}
+
+# golangが対象のversionで設定されたことを確認
+go version
+
+# go modulesを設定（$GOPATH以外のディレクトリで開発が可能になる）
+go env -w GO111MODULE=on
+go env GO111MODULE 
