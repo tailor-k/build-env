@@ -41,7 +41,7 @@ goenv install ${VERSION}
 cat ~/.bash_profile | grep -e "GOROOT" -e "GOPATH"
 
 # 環境変数の設定
-echo 'export PATH="$GOROOT/bin/$PATH"' >> ~/.bash_profile
+echo 'export PATH="$GOROOT/bin:$PATH"' >> ~/.bash_profile
 echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bash_profile
 
 # 対象versionの適用
